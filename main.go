@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 	"os"
@@ -19,6 +20,7 @@ func getApi(w http.ResponseWriter, r *http.Request) {
 	api.Uptime = "uptime"
 	api.Info = "Service for IGC tracks."
 	api.Version = "version : v1"
+	fmt.Fprintf(w, "%s\n%s\n%s", api.Uptime, api.Info, api.Version)
 
 }
 
