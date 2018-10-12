@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -21,6 +22,7 @@ func getApi(w http.ResponseWriter, r *http.Request) {
 	api.Info = "Service for IGC tracks."
 	api.Version = "version : v1"
 	fmt.Fprintf(w, "%s\n%s\n%s", api.Uptime, api.Info, api.Version)
+	json.NewEncoder(w).Encode(api)
 
 }
 
