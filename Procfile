@@ -1,1 +1,1 @@
-web: igctrackviewer
+web: igctrackviewer.herokuapp.com
