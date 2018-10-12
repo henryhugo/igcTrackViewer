@@ -62,7 +62,7 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			//TODO check correct igc URL
 			db.add(igc, idCount)
 			for url, id := range db.igcs {
-				fmt.Println("URL:", url, "Id:", id)
+				fmt.Printf("URL:%s Id:%d", url, id)
 			}
 
 			/*
