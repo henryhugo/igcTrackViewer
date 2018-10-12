@@ -61,9 +61,8 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			}
 			//TODO check correct igc URL
 			db.add(igc, idCount)
-			for url, id := range db.igcs {
-				fmt.Printf("URL:%s Id:%d", url, id)
-			}
+			idCount += 1
+			fmt.Fprintf(w, "map : %v", db.igcs)
 
 			/*
 				s := "http://skypolaris.org/wp-content/uploads/IGS%20Files/Madrid%20to%20Jerez.igc"
