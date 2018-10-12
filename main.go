@@ -27,7 +27,7 @@ func (db igcDB) add(igc igcFile, idCount int) {
 		if url == igc.Url {
 			return
 		}
-		db.igcs["igcFile"] = idCount
+		db.igcs[igc.Url] = idCount
 	}
 }
 
@@ -61,7 +61,10 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			}
 			//TODO check correct igc URL
 			db.add(igc, idCount)
-			fmt.Fprintf(w, "%s", db.igcs)
+			for url, id := range db.igcs {
+				fmt.Println("URL:", url, "Id:", id)
+			}
+
 			/*
 				s := "http://skypolaris.org/wp-content/uploads/IGS%20Files/Madrid%20to%20Jerez.igc"
 				track, err := igc.ParseLocation(s)
