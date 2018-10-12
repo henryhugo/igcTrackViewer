@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 )
@@ -14,6 +15,14 @@ type API struct {
 }
 type igcFile struct {
 	Url string //a valid igc URL
+}
+
+type igcDB struct {
+	igcs []igcFile
+}
+
+func (db igcDB) add(igc igcFile) {
+	db.igcs = append(db.igcs, igc)
 }
 
 func getApi(w http.ResponseWriter, r *http.Request) {
@@ -29,6 +38,7 @@ func getApi(w http.ResponseWriter, r *http.Request) {
 }
 
 func igcHandler(w http.ResponseWriter, r *http.Request) {
+	db := &igcDB{}
 	switch r.Method {
 	case "POST":
 		{
@@ -41,7 +51,8 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 			}
-
+			db.add(igc)
+			fmt.Fprintf(w, "%s", igc)
 			/*
 				s := "http://skypolaris.org/wp-content/uploads/IGS%20Files/Madrid%20to%20Jerez.igc"
 				track, err := igc.ParseLocation(s)
