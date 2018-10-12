@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"io"
 	"net/http"
 	"os"
 )
@@ -16,7 +15,7 @@ type API struct {
 
 func getApi(w http.ResponseWriter, r *http.Request) {
 	http.Header.Add(w.Header(), "content-type", "application/json")
-	io.WriteString(w, "Api information :\n")
+	//io.WriteString(w, "Api information :\n")
 	api := &API{}
 	api.Uptime = "uptime"
 	api.Info = "Service for IGC tracks."
