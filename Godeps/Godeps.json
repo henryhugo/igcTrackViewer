@@ -1,0 +1,6 @@
+{
+	"ImportPath": "igcTrackViewer",
+	"GoVersion": "go1.11",
+	"GodepVersion": "v80",
+	"Deps": []
+}
