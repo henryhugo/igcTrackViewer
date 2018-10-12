@@ -6,13 +6,24 @@ import (
 	"os"
 )
 
-func hello(w http.ResponseWriter, r *http.Request) {
-	io.WriteString(w, "Hello World")
+type API struct {
+	Uptime  string //"uptime": <uptime>
+	Info    string //"info": "Service for IGC tracks."
+	Version string //"version": "v1"
+
+}
+
+func getApi(w http.ResponseWriter, r *http.Request) {
+	io.WriteString(w, "Api information :\n")
+	api := &API{}
+	api.Uptime = "uptime"
+	api.Info = "Service for IGC tracks."
+	api.Version = "version : v1"
 
 }
 
 func main() {
 	port := os.Getenv("PORT")
-	http.HandleFunc("/", hello)
+	http.HandleFunc("/igcinfo/api", getApi)
 	http.ListenAndServe(":"+port, nil)
 }
