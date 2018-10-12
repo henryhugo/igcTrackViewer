@@ -18,11 +18,17 @@ type igcFile struct {
 }
 
 type igcDB struct {
-	igcs []igcFile
+	igcs map[string]int
 }
 
-func (db igcDB) add(igc igcFile) {
-	db.igcs = append(db.igcs, igc)
+func (db igcDB) add(igc igcFile, idCount int) {
+	//db.igcs = append(db.igcs, igc)
+	for url, _ := range db.igcs {
+		if url == igc.Url {
+			return
+		}
+		db.igcs["igcFile"] = idCount
+	}
 }
 
 func getApi(w http.ResponseWriter, r *http.Request) {
@@ -39,6 +45,8 @@ func getApi(w http.ResponseWriter, r *http.Request) {
 
 func igcHandler(w http.ResponseWriter, r *http.Request) {
 	db := &igcDB{}
+	idCount := 0
+	//var ids []int
 	switch r.Method {
 	case "POST":
 		{
@@ -51,8 +59,9 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 			}
-			db.add(igc)
-			fmt.Fprintf(w, "%s", igc)
+			//TODO check correct igc URL
+			db.add(igc, idCount)
+			fmt.Fprintf(w, "%s", db.igcs)
 			/*
 				s := "http://skypolaris.org/wp-content/uploads/IGS%20Files/Madrid%20to%20Jerez.igc"
 				track, err := igc.ParseLocation(s)
@@ -75,7 +84,6 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-
 	port := os.Getenv("PORT")
 	http.HandleFunc("/igcinfo/api", getApi)
 	http.HandleFunc("/igcinfo/api/igc", igcHandler)
