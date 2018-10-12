@@ -23,12 +23,12 @@ type igcDB struct {
 
 func (db igcDB) add(igc igcFile, idCount int) {
 	//db.igcs = append(db.igcs, igc)
-	/*for url, _ := range db.igcs {
-	if url == igc.Url {
-		return
-	}*/
-	db.igcs[igc.Url] = idCount
-
+	for url, _ := range db.igcs {
+		if url == igc.Url {
+			return
+		}
+		db.igcs[igc.Url] = idCount
+	}
 }
 
 func getApi(w http.ResponseWriter, r *http.Request) {
