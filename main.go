@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"os"
 )
@@ -65,7 +64,7 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 			}
 			//TODO check correct igc URL
-			newId := "id" + fmt.Sprintf("%d", idCount)
+			newId := "id"
 			idCount += 1
 			ids = append(ids, newId)
 			db.add(igc, newId)
