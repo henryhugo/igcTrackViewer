@@ -49,6 +49,8 @@ func getApi(w http.ResponseWriter, r *http.Request) {
 
 func igcHandler(w http.ResponseWriter, r *http.Request) {
 	db := &igcDB{}
+	//idCount := 0
+	var ids []string
 	switch r.Method {
 	case "POST":
 		{
@@ -63,7 +65,6 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			}
 			//TODO check correct igc URL
 			db.add(igc)
-
 			/*newId := "id" + fmt.Sprintf("%d", idCount)
 			idCount += 1
 			igc.Id = newId
@@ -81,8 +82,8 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 	case "GET":
 		{
 			//GET case
-			/*http.Header.Add(w.Header(), "content-type", "application/json")
-			json.NewEncoder(w).Encode(ids)*/
+			http.Header.Add(w.Header(), "content-type", "application/json")
+			json.NewEncoder(w).Encode(ids)
 		}
 	default:
 		http.Error(w, "not implemented yet", http.StatusNotImplemented)
