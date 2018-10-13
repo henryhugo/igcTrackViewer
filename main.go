@@ -69,7 +69,6 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			idCount += 1
 			igc.Id = newId
 			ids = append(ids, newId)*/
-			http.Header.Add(w.Header(), "content-type", "application/json")
 			json.NewEncoder(w).Encode(igc)
 			/*
 				s := "http://skypolaris.org/wp-content/uploads/IGS%20Files/Madrid%20to%20Jerez.igc"
