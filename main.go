@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"os"
 )
@@ -64,12 +63,12 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 			}
 			//TODO check correct igc URL
-			Idstr := "id"
+			/*Idstr := "id"
 			idCount := 0
 			strValue := fmt.Sprintf("%d", idCount)
 			newId := Idstr + strValue
-			idCount += 1
-			db.add(igc, newId)
+			idCount += 1*/
+			//db.add(igc, newId)
 			json.NewEncoder(w).Encode(igc)
 		}
 	case "GET":
