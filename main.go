@@ -49,8 +49,8 @@ func getApi(w http.ResponseWriter, r *http.Request) {
 
 func igcHandler(w http.ResponseWriter, r *http.Request) {
 	db := &igcDB{}
-	/*idCount := 0
-	var ids []string*/
+	idCount := 0
+	var ids []string
 	switch r.Method {
 	case "POST":
 		{
