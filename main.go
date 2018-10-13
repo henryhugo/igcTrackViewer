@@ -25,7 +25,7 @@ func (db igcDB) add(igc igcFile, id string) {
 	db.igcs[id] = igc
 }
 
-func (db *igcDB) Count() int {
+func (db igcDB) Count() int {
 	return len(db.igcs)
 }
 
@@ -65,9 +65,9 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			}
 			//TODO check correct igc URL
 			Idstr := "id"
-			idCount := 0
 			strValue := fmt.Sprintf("%d", idCount)
 			newId := Idstr + strValue
+			ids = append(ids, newId)
 			idCount += 1
 			db.add(igc, newId)
 			json.NewEncoder(w).Encode(igc)
@@ -75,8 +75,8 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 	case "GET":
 		{
 			//GET case
-			//http.Header.Add(w.Header(), "content-type", "application/json")
-			//json.NewEncoder(w).Encode(ids)
+			http.Header.Add(w.Header(), "content-type", "application/json")
+			json.NewEncoder(w).Encode(ids)
 		}
 	default:
 		http.Error(w, "not implemented yet", http.StatusNotImplemented)
@@ -85,9 +85,13 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 var db igcDB
+var ids []string
+var idCount int
 
 func main() {
 	db = igcDB{}
+	idCount = 0
+	ids = nil
 	port := os.Getenv("PORT")
 	http.HandleFunc("/igcinfo/api", getApi)
 	http.HandleFunc("/igcinfo/api/igc", igcHandler)
