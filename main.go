@@ -49,7 +49,7 @@ func getApi(w http.ResponseWriter, r *http.Request) {
 }
 
 func igcHandler(w http.ResponseWriter, r *http.Request) {
-	db := &igcDB{}
+
 	switch r.Method {
 	case "POST":
 		{
@@ -84,7 +84,10 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+var db igcDB
+
 func main() {
+	db = igcDB{}
 	port := os.Getenv("PORT")
 	http.HandleFunc("/igcinfo/api", getApi)
 	http.HandleFunc("/igcinfo/api/igc", igcHandler)
