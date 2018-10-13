@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 )
@@ -14,14 +15,15 @@ type API struct {
 }
 type igcFile struct {
 	Url string //a valid igc URL
+	Id  string
 }
 
 type igcDB struct {
-	igcs []igcFile
+	igcs map[string]igcFile
 }
 
 func (db igcDB) add(igc igcFile) {
-	db.igcs = append(db.igcs, igc)
+	db.igcs[igc.Url] = igc
 
 }
 
@@ -29,12 +31,12 @@ func (db igcDB) Count() int {
 	return len(db.igcs)
 }
 
-func (db igcDB) Get(i int) igcFile {
+/*func (db igcDB) Get(i int) igcFile {
 	if i < 0 || i >= len(db.igcs) {
 		return igcFile{}
 	}
 	return db.igcs[i]
-}
+}*/
 
 func getApi(w http.ResponseWriter, r *http.Request) {
 	http.Header.Add(w.Header(), "content-type", "application/json")
@@ -50,8 +52,8 @@ func getApi(w http.ResponseWriter, r *http.Request) {
 
 func igcHandler(w http.ResponseWriter, r *http.Request) {
 	db := &igcDB{}
-
-	//var ids []int
+	idCount := 0
+	var ids []string
 	switch r.Method {
 	case "POST":
 		{
@@ -66,8 +68,12 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			}
 			//TODO check correct igc URL
 			db.add(igc)
+			newId := "id" + fmt.Sprintf("%d", idCount)
+			idCount += 1
+			igc.Id = newId
+			ids = append(ids, newId)
 			http.Header.Add(w.Header(), "content-type", "application/json")
-			json.NewEncoder(w).Encode(len(db.igcs))
+			json.NewEncoder(w).Encode(igc.Id)
 			/*
 				s := "http://skypolaris.org/wp-content/uploads/IGS%20Files/Madrid%20to%20Jerez.igc"
 				track, err := igc.ParseLocation(s)
@@ -82,7 +88,7 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 		{
 			//GET case
 			http.Header.Add(w.Header(), "content-type", "application/json")
-			json.NewEncoder(w).Encode(db.igcs)
+			json.NewEncoder(w).Encode(ids)
 		}
 	default:
 		http.Error(w, "not implemented yet", http.StatusNotImplemented)
