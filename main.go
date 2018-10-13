@@ -68,6 +68,7 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			idCount += 1
 			ids = append(ids, newId)
 			db.add(igc, newId)
+			json.NewEncoder(w).Encode(newId)
 		}
 	case "GET":
 		{
