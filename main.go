@@ -50,7 +50,6 @@ func getApi(w http.ResponseWriter, r *http.Request) {
 func igcHandler(w http.ResponseWriter, r *http.Request) {
 	db := &igcDB{}
 	idCount := 0
-	var ids []string
 	switch r.Method {
 	case "POST":
 		{
@@ -66,7 +65,6 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			//TODO check correct igc URL
 			newId := "id"
 			idCount += 1
-			ids = append(ids, newId)
 			db.add(igc, newId)
 			json.NewEncoder(w).Encode(igc)
 		}
