@@ -21,8 +21,8 @@ type igcDB struct {
 	igcs map[string]igcFile
 }
 
-func (db *igcDB) add(igc igcFile) {
-	db.igcs["id"] = igc
+func (db *igcDB) add(igc igcFile, id string) {
+	db.igcs[id] = igc
 }
 
 func (db *igcDB) Count() int {
@@ -49,8 +49,7 @@ func getApi(w http.ResponseWriter, r *http.Request) {
 }
 
 func igcHandler(w http.ResponseWriter, r *http.Request) {
-	//db := &igcDB{}
-	//sdg
+	db := &igcDB{}
 	switch r.Method {
 	case "POST":
 		{
@@ -69,9 +68,8 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			idCount := 0
 			strValue := fmt.Sprintf("%d", idCount)
 			newId := Idstr + strValue
-			newId = newId + ""
 			idCount += 1
-			//db.add(igc)
+			db.add(igc, newId)
 			json.NewEncoder(w).Encode(igc)
 		}
 	case "GET":
