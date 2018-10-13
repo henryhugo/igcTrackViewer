@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 )
@@ -48,11 +49,12 @@ func getApi(w http.ResponseWriter, r *http.Request) {
 }
 
 func igcHandler(w http.ResponseWriter, r *http.Request) {
-	db := &igcDB{}
-	//idCount := 0
+	//db := &igcDB{}
+
 	switch r.Method {
 	case "POST":
 		{
+
 			if r.Body == nil {
 				http.Error(w, "no JSON body", http.StatusBadRequest)
 				return
@@ -63,9 +65,13 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 			}
 			//TODO check correct igc URL
-			/*newId := "id"
-			idCount += 1*/
-			db.add(igc)
+			Idstr := "id"
+			idCount := 0
+			strValue := fmt.Sprintf("%d", idCount)
+			newId := Idstr + strValue
+			newId = newId + ""
+			idCount += 1
+			//db.add(igc)
 			json.NewEncoder(w).Encode(igc)
 		}
 	case "GET":
