@@ -20,11 +20,11 @@ type igcDB struct {
 	igcs map[string]igcFile
 }
 
-func (db igcDB) add(igc igcFile, Id string) {
+func (db *igcDB) add(igc igcFile, Id string) {
 	db.igcs[Id] = igc
 }
 
-func (db igcDB) Count() int {
+func (db *igcDB) Count() int {
 	return len(db.igcs)
 }
 
@@ -68,13 +68,13 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			idCount += 1
 			ids = append(ids, newId)
 			db.add(igc, newId)
-			json.NewEncoder(w).Encode(newId)
+			json.NewEncoder(w).Encode(igc)
 		}
 	case "GET":
 		{
 			//GET case
-			http.Header.Add(w.Header(), "content-type", "application/json")
-			json.NewEncoder(w).Encode(ids)
+			//http.Header.Add(w.Header(), "content-type", "application/json")
+			//json.NewEncoder(w).Encode(ids)
 		}
 	default:
 		http.Error(w, "not implemented yet", http.StatusNotImplemented)
