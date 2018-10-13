@@ -14,7 +14,6 @@ type API struct {
 }
 type igcFile struct {
 	Url string //a valid igc URL
-	Id  string
 }
 
 type igcDB struct {
