@@ -20,8 +20,8 @@ type igcDB struct {
 	igcs map[string]igcFile
 }
 
-func (db *igcDB) add(igc igcFile, Id string) {
-	db.igcs[Id] = igc
+func (db *igcDB) add(igc igcFile) {
+	db.igcs["id"] = igc
 }
 
 func (db *igcDB) Count() int {
@@ -63,9 +63,9 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 			}
 			//TODO check correct igc URL
-			newId := "id"
-			idCount += 1
-			db.add(igc, newId)
+			/*newId := "id"
+			idCount += 1*/
+			db.add(igc)
 			json.NewEncoder(w).Encode(igc)
 		}
 	case "GET":
