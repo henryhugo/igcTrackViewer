@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"os"
 )
@@ -24,7 +23,6 @@ type igcDB struct {
 
 func (db igcDB) add(igc igcFile) {
 	db.igcs[igc.Url] = igc
-
 }
 
 func (db igcDB) Count() int {
@@ -68,12 +66,12 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			}
 			//TODO check correct igc URL
 			db.add(igc)
-			newId := "id" + fmt.Sprintf("%d", idCount)
+			/*newId := "id" + fmt.Sprintf("%d", idCount)
 			idCount += 1
 			igc.Id = newId
-			ids = append(ids, newId)
+			ids = append(ids, newId)*/
 			http.Header.Add(w.Header(), "content-type", "application/json")
-			json.NewEncoder(w).Encode(igc.Id)
+			json.NewEncoder(w).Encode(igc)
 			/*
 				s := "http://skypolaris.org/wp-content/uploads/IGS%20Files/Madrid%20to%20Jerez.igc"
 				track, err := igc.ParseLocation(s)
