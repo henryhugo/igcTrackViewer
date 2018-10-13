@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 )
@@ -20,8 +21,8 @@ type igcDB struct {
 	igcs map[string]igcFile
 }
 
-func (db igcDB) add(igc igcFile) {
-	db.igcs[igc.Url] = igc
+func (db igcDB) add(igc igcFile, Id string) {
+	db.igcs[Id] = igc
 }
 
 func (db igcDB) Count() int {
@@ -49,7 +50,7 @@ func getApi(w http.ResponseWriter, r *http.Request) {
 
 func igcHandler(w http.ResponseWriter, r *http.Request) {
 	db := &igcDB{}
-	//idCount := 0
+	idCount := 0
 	var ids []string
 	switch r.Method {
 	case "POST":
@@ -64,20 +65,10 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 			}
 			//TODO check correct igc URL
-			db.add(igc)
-			/*newId := "id" + fmt.Sprintf("%d", idCount)
+			newId := "id" + fmt.Sprintf("%d", idCount)
 			idCount += 1
-			igc.Id = newId
-			ids = append(ids, newId)*/
-			/*
-				s := "http://skypolaris.org/wp-content/uploads/IGS%20Files/Madrid%20to%20Jerez.igc"
-				track, err := igc.ParseLocation(s)
-				if err != nil {
-					fmt.Errorf("Problem reading the track", err)
-				}
-
-				fmt.Printf("Pilot: %s, gliderType: %s, date: %s",
-					track.Pilot, track.GliderType, track.Date.String())*/
+			ids = append(ids, newId)
+			db.add(igc, newId)
 		}
 	case "GET":
 		{
