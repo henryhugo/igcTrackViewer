@@ -67,7 +67,7 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			//TODO check correct igc URL
 			db.add(igc)
 			http.Header.Add(w.Header(), "content-type", "application/json")
-			json.NewEncoder(w).Encode(db.Get(len(db.igcs)))
+			json.NewEncoder(w).Encode(len(db.igcs))
 			/*
 				s := "http://skypolaris.org/wp-content/uploads/IGS%20Files/Madrid%20to%20Jerez.igc"
 				track, err := igc.ParseLocation(s)
