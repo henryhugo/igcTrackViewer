@@ -86,7 +86,7 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			newId := Idstr + strValue
 			ids = append(ids, newId)
 			idCount += 1
-			db.igcs = map[string]igcFile{}
+
 			db.add(igc, newId)
 
 			json.NewEncoder(w).Encode(newId)
@@ -116,6 +116,7 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 				id := parts[4]
 				igcWanted = db.Get(id)
 				json.NewEncoder(w).Encode(igcWanted)
+				//
 
 			}
 		}
@@ -136,6 +137,7 @@ var idCount int
 
 func main() {
 	db = igcDB{}
+	db.igcs = map[string]igcFile{}
 	idCount = 0
 	ids = nil
 	port := os.Getenv("PORT")
