@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/marni/goigc"
+	igc "github.com/marni/goigc"
 )
 
 type igcTrack struct {
