@@ -75,13 +75,14 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 			}
 			//TODO check correct igc URL
-			fmt.Fprintf(w, "longueur : %s\n", igc.Url)
+			fmt.Fprintf(w, "URL : %s\n", igc.Url)
 			Idstr := "id"
 			strValue := fmt.Sprintf("%d", idCount)
 			newId := Idstr + strValue
 			ids = append(ids, newId)
 			idCount += 1
 			//db.add(igc, newId)
+			db.igcs[newId] = igc
 			json.NewEncoder(w).Encode(newId)
 		}
 	case "GET":
