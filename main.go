@@ -80,6 +80,7 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			//GET case
 			http.Header.Add(w.Header(), "content-type", "application/json")
 			parts := strings.Split(r.URL.Path, "/")
+			fmt.Fprintf(w, "longueur : %d\n", len(parts))
 			if len(parts) > 5 || len(parts) < 3 {
 				//deal with errors
 				fmt.Fprintln(w, "wrong numbers of parameters")
