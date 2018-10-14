@@ -97,8 +97,8 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			//GET case
 			http.Header.Add(w.Header(), "content-type", "application/json")
 			parts := strings.Split(r.URL.Path, "/")
-			fmt.Fprintf(w, "longueur : %d\n", len(parts))
-			fmt.Fprintln(w, parts)
+			//fmt.Fprintf(w, "longueur : %d\n", len(parts))
+			//fmt.Fprintln(w, parts)
 			if len(parts) < 5 || len(parts) > 6 {
 				//deal with errors
 				fmt.Fprintln(w, "wrong numbers of parameters")
@@ -137,12 +137,12 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 					fmt.Fprintln(w, "Use format id0 or id21 for exemple")
 				}
 			}
-			/*if parts[5] == "" {
+			if parts[5] != "" {
 				fmt.Fprintln(w, "case field")
 				/*infoWanted := parts[5]
-				id := parts[4]
+				id := parts[4]*/
 
-			}*/
+			}
 
 		}
 	default:
