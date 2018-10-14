@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"net/http"
 	"os"
+	"regexp"
 	"strings"
 
 	igc "github.com/marni/goigc"
@@ -96,8 +97,8 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			//GET case
 			http.Header.Add(w.Header(), "content-type", "application/json")
 			parts := strings.Split(r.URL.Path, "/")
-			fmt.Fprintf(w, "longueur : %d\n", len(parts))
-			fmt.Fprintln(w, parts)
+			//fmt.Fprintf(w, "longueur : %d\n", len(parts))
+			//fmt.Fprintln(w, parts)
 			if len(parts) != 5 {
 				//deal with errors
 				fmt.Fprintln(w, "wrong numbers of parameters")
@@ -105,31 +106,36 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			}
 			if parts[4] == "" {
 				//deal with the array
-				fmt.Fprintln(w, "case array")
+				fmt.Fprintln(w, "Display the array")
 				json.NewEncoder(w).Encode(ids)
 
 			}
 			if parts[4] != "" {
-				fmt.Fprintln(w, "case id")
+				fmt.Fprintln(w, "Information about the id")
 				//deal with the id
 				var igcWanted igcFile
+				rgx, _ := regexp.Compile("^id[0-9]*")
 				id := parts[4]
-				igcWanted = db.Get(id)
-				//json.NewEncoder(w).Encode(igcWanted)
+				if rgx.MatchString(id) == true {
+					igcWanted = db.Get(id)
 
-				//then encode the igcFile
-				url := igcWanted.Url
-				track, err := igc.ParseLocation(url)
-				if err != nil {
-					//fmt.Errorf("Problem reading the track", err)
+					//then encode the igcFile
+					url := igcWanted.Url
+					track, err := igc.ParseLocation(url)
+					if err != nil {
+						//fmt.Errorf("Problem reading the track", err)
+					}
+					igcT := igcTrack{}
+					igcT.Glider = track.GliderType
+					igcT.Glider_id = track.GliderID
+					igcT.Pilot = track.Pilot
+					igcT.Track_length = track.Task.Distance()
+					igcT.H_date = track.Date.String()
+					json.NewEncoder(w).Encode(igcT)
 				}
-				igcT := igcTrack{}
-				igcT.Glider = track.GliderType
-				igcT.Glider_id = track.GliderID
-				igcT.Pilot = track.Pilot
-				igcT.Track_length = track.Task.Distance()
-				igcT.H_date = track.Date.String()
-				json.NewEncoder(w).Encode(igcT)
+				if rgx.MatchString(id) == false {
+					fmt.Fprintln(w, "Use format id0 or id21 for exemple")
+				}
 			}
 		}
 	default:
