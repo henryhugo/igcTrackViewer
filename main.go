@@ -78,6 +78,8 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			//GET case
 			http.Header.Add(w.Header(), "content-type", "application/json")
 			parts := strings.Split(r.URL.Path, "/")
+			id := parts[5]
+			fmt.Fprintf(w, "The id is : %s", id)
 			fmt.Fprintln(w, parts)
 			json.NewEncoder(w).Encode(ids)
 		}
@@ -101,7 +103,6 @@ func main() {
 	idCount = 0
 	ids = nil
 	port := os.Getenv("PORT")
-	//http.HandleFunc("/igcinfo/api/igc/", idHandler)
 	http.HandleFunc("/igcinfo/api", getApi)
 	http.HandleFunc("/igcinfo/api/igc/", igcHandler)
 
