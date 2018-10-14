@@ -30,12 +30,14 @@ func (db igcDB) Count() int {
 	return len(db.igcs)
 }
 
-/*func (db igcDB) Get(i int) igcFile {
-	if i < 0 || i >= len(db.igcs) {
-		return igcFile{}
+func (db igcDB) Get(idWanted string) igcFile {
+	for id, file := range db.igcs {
+		if idWanted == id {
+			return file
+		}
 	}
-	return db.igcs[i]
-}*/
+	return igcFile{}
+}
 
 func getApi(w http.ResponseWriter, r *http.Request) {
 	http.Header.Add(w.Header(), "content-type", "application/json")
@@ -78,12 +80,24 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			//GET case
 			http.Header.Add(w.Header(), "content-type", "application/json")
 			parts := strings.Split(r.URL.Path, "/")
-			id := parts[4]
-			longueur := len(parts)
-			fmt.Fprintf(w, "The len is : %d\n", longueur)
-			fmt.Fprintf(w, "The id is : %s\n", id)
+			if len(parts) != 5 || len(parts) != 4 {
+				//deal with errors
+				fmt.Fprintln(w, "wrong numbers of parameters")
+				return
+			}
+			if len(parts) == 5 {
+				//deal with the id
+				var igcWanted igcFile
+				id := parts[4]
+				igcWanted = db.Get(id)
+				json.NewEncoder(w).Encode(igcWanted)
+
+			}
 			//fmt.Fprintln(w, parts)
-			json.NewEncoder(w).Encode(ids)
+			if len(parts) == 4 {
+				//deal with the array
+				json.NewEncoder(w).Encode(ids)
+			}
 		}
 	default:
 		http.Error(w, "not implemented yet", http.StatusNotImplemented)
