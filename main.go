@@ -97,7 +97,7 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 
 			}
 			//fmt.Fprintln(w, parts)
-			if len(parts) == 4 {
+			if len(parts) == 6 {
 				//deal with the array
 				json.NewEncoder(w).Encode(ids)
 			}
