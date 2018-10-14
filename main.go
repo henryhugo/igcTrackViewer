@@ -87,13 +87,14 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 				fmt.Fprintln(w, "wrong numbers of parameters")
 				return
 			}
-			if parts[5] == "" {
+			if parts[4] == "" {
 				//deal with the array
 				fmt.Fprintln(w, "case 5")
 				json.NewEncoder(w).Encode(ids)
 
 			}
-			if parts[5] != "" {
+			if parts[4] != "" {
+				fmt.Fprintln(w, "case id")
 				//deal with the id
 				/*var igcWanted igcFile
 				id := parts[4]
