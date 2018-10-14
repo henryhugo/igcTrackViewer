@@ -8,6 +8,14 @@ import (
 	"strings"
 )
 
+type igcStruct struct {
+	H_date       string //"H_date": <date from File Header, H-record>,
+	Pilot        string //"pilot": <pilot>,
+	Glider       string //"glider": <glider>,
+	Glider_id    string //"glider_id": <glider_id>,
+	Track_length string //"track_length": <calculated total track length>
+}
+
 type API struct {
 	Uptime  string //"uptime": <uptime>
 	Info    string //"info": "Service for IGC tracks."
@@ -67,6 +75,7 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 			}
 			//TODO check correct igc URL
+			fmt.Fprintf(w, "longueur : %s\n", igc.Url)
 			Idstr := "id"
 			strValue := fmt.Sprintf("%d", idCount)
 			newId := Idstr + strValue
