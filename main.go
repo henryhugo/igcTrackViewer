@@ -121,7 +121,7 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 				url := igcWanted.Url
 				track, err := igc.ParseLocation(url)
 				if err != nil {
-					fmt.Errorf("Problem reading the track", err)
+					//fmt.Errorf("Problem reading the track", err)
 				}
 				igcT := igcTrack{}
 				igcT.Glider = track.GliderType
