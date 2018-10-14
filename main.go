@@ -27,10 +27,15 @@ type igcFile struct {
 }
 
 type igcDB struct {
-	igcs map[string]*igcFile
+	igcs map[string]igcFile
 }
 
-func (db *igcDB) add(igc *igcFile, id string) {
+func (db *igcDB) add(igc igcFile, id string) {
+	for _, file := range db.igcs {
+		if igc == file {
+			return
+		}
+	}
 	db.igcs[id] = igc
 }
 
@@ -41,7 +46,7 @@ func (db igcDB) Count() int {
 func (db igcDB) Get(idWanted string) igcFile {
 	for id, file := range db.igcs {
 		if idWanted == id {
-			return *file
+			return file
 		}
 	}
 	return igcFile{}
@@ -81,7 +86,9 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			newId := Idstr + strValue
 			ids = append(ids, newId)
 			idCount += 1
-			db.add(&igc, newId)
+			db.igcs = map[string]igcFile{}
+			db.add(igc, newId)
+
 			json.NewEncoder(w).Encode(newId)
 		}
 	case "GET":
