@@ -2,9 +2,6 @@
 	"ImportPath": "igcTrackViewer",
 	"GoVersion": "go1.11",
 	"GodepVersion": "v80",
-	"Packages": [
-		"github.com/golang/geo/s2"
-	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/golang/geo/r1",
@@ -25,6 +22,11 @@
 		{
 			"ImportPath": "github.com/golang/geo/s2",
 			"Rev": "476085157cff9aaeef4d4f124649436542d4114a"
+		},
+		{
+			"ImportPath": "github.com/marni/goigc",
+			"Comment": "v0.1.0-10-g71f274d",
+			"Rev": "71f274dd21ef320ccbb6c6271c7df7fd8a908779"
 		}
 	]
 }
