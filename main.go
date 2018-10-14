@@ -89,17 +89,17 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			}
 			if parts[4] == "" {
 				//deal with the array
-				fmt.Fprintln(w, "case 5")
+				fmt.Fprintln(w, "case array")
 				json.NewEncoder(w).Encode(ids)
 
 			}
 			if parts[4] != "" {
 				fmt.Fprintln(w, "case id")
 				//deal with the id
-				/*var igcWanted igcFile
+				var igcWanted igcFile
 				id := parts[4]
 				igcWanted = db.Get(id)
-				json.NewEncoder(w).Encode(igcWanted)*/
+				json.NewEncoder(w).Encode(igcWanted)
 
 			}
 		}
