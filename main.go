@@ -78,11 +78,12 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 			var igc igcFile
+			//TODO check correct igc URL
 			err := json.NewDecoder(r.Body).Decode(&igc)
 			if err != nil {
 				http.Error(w, err.Error(), http.StatusBadRequest)
 			}
-			//TODO check correct igc URL
+
 			fmt.Fprintf(w, "URL : %s\n", igc.Url)
 			Idstr := "id"
 			strValue := fmt.Sprintf("%d", idCount)
@@ -137,8 +138,9 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 					fmt.Fprintln(w, "Use format id0 or id21 for exemple")
 				}
 			}
-			/*if parts[5] == "lol" {
-				fmt.Fprintln(w, "case field")
+			/*if parts[5] != "" && parts[4] != ""  {
+				//TODO parse field track_lenghtto float64, return the value asked
+
 				/*infoWanted := parts[5]
 				id := parts[4]
 
