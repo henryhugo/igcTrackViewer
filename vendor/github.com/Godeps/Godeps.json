@@ -1,0 +1,30 @@
+{
+	"ImportPath": "igcTrackViewer/vendor/github.com",
+	"GoVersion": "go1.11",
+	"GodepVersion": "v80",
+	"Packages": [
+		"github.com/golang/geo/s2"
+	],
+	"Deps": [
+		{
+			"ImportPath": "github.com/golang/geo/r1",
+			"Rev": "476085157cff9aaeef4d4f124649436542d4114a"
+		},
+		{
+			"ImportPath": "github.com/golang/geo/r2",
+			"Rev": "476085157cff9aaeef4d4f124649436542d4114a"
+		},
+		{
+			"ImportPath": "github.com/golang/geo/r3",
+			"Rev": "476085157cff9aaeef4d4f124649436542d4114a"
+		},
+		{
+			"ImportPath": "github.com/golang/geo/s1",
+			"Rev": "476085157cff9aaeef4d4f124649436542d4114a"
+		},
+		{
+			"ImportPath": "github.com/golang/geo/s2",
+			"Rev": "476085157cff9aaeef4d4f124649436542d4114a"
+		}
+	]
+}
