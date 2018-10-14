@@ -6,8 +6,6 @@ import (
 	"net/http"
 	"os"
 	"strings"
-
-	igc "github.com/marni/goigc"
 )
 
 type igcTrack struct {
@@ -112,7 +110,7 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			if parts[4] != "" {
 				fmt.Fprintln(w, "case id")
 				//deal with the id
-				var igcWanted igcFile
+				/*var igcWanted igcFile
 				id := parts[4]
 				igcWanted = db.Get(id)
 				//json.NewEncoder(w).Encode(igcWanted)
@@ -129,7 +127,7 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 				igcT.Pilot = track.Pilot
 				igcT.Track_length = track.Task.Distance()
 				igcT.H_date = track.Date.String()
-				json.NewEncoder(w).Encode(igcT)
+				json.NewEncoder(w).Encode(igcT)*/
 			}
 		}
 	default:
