@@ -79,8 +79,10 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			http.Header.Add(w.Header(), "content-type", "application/json")
 			parts := strings.Split(r.URL.Path, "/")
 			id := parts[4]
-			fmt.Fprintf(w, "The id is : %s", id)
-			fmt.Fprintln(w, parts)
+			longueur := len(parts)
+			fmt.Fprintf(w, "The len is : %d\n", longueur)
+			fmt.Fprintf(w, "The id is : %s\n", id)
+			//fmt.Fprintln(w, parts)
 			json.NewEncoder(w).Encode(ids)
 		}
 	default:
