@@ -7,6 +7,7 @@ import (
 	"os"
 	"regexp"
 	"strings"
+	"time"
 
 	igc "github.com/marni/goigc"
 )
@@ -20,9 +21,9 @@ type igcTrack struct {
 }
 
 type API struct {
-	Uptime  string //"uptime": <uptime>
-	Info    string //"info": "Service for IGC tracks."
-	Version string //"version": "v1"
+	Uptime  time.Time //"uptime": <uptime>
+	Info    string    //"info": "Service for IGC tracks."
+	Version string    //"version": "v1"
 
 }
 type igcFile struct {
@@ -59,7 +60,7 @@ func getApi(w http.ResponseWriter, r *http.Request) {
 	http.Header.Add(w.Header(), "content-type", "application/json")
 	//io.WriteString(w, "Api information :\n")
 	api := &API{}
-	api.Uptime = "uptime"
+	api.Uptime = time.Now()
 	api.Info = "Service for IGC tracks."
 	api.Version = "version : v1"
 	//fmt.Fprintf(w, "%s\n%s\n%s", api.Uptime, api.Info, api.Version)
