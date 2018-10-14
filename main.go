@@ -138,11 +138,6 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-/*func idHandler(w http.ResponseWriter, r *http.Request) {
-	http.Header.Add(w.Header(), "content-type", "application/json")
-
-}*/
-
 var db igcDB
 var ids []string
 var idCount int
