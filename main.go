@@ -6,14 +6,16 @@ import (
 	"net/http"
 	"os"
 	"strings"
+
+	"github.com/marni/goigc"
 )
 
-type igcStruct struct {
-	H_date       string //"H_date": <date from File Header, H-record>,
-	Pilot        string //"pilot": <pilot>,
-	Glider       string //"glider": <glider>,
-	Glider_id    string //"glider_id": <glider_id>,
-	Track_length string //"track_length": <calculated total track length>
+type igcTrack struct {
+	H_date       string  //"H_date": <date from File Header, H-record>,
+	Pilot        string  //"pilot": <pilot>,
+	Glider       string  //"glider": <glider>,
+	Glider_id    string  //"glider_id": <glider_id>,
+	Track_length float64 //"track_length": <calculated total track length>
 }
 
 type API struct {
@@ -86,9 +88,7 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			newId := Idstr + strValue
 			ids = append(ids, newId)
 			idCount += 1
-
 			db.add(igc, newId)
-
 			json.NewEncoder(w).Encode(newId)
 		}
 	case "GET":
@@ -115,9 +115,21 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 				var igcWanted igcFile
 				id := parts[4]
 				igcWanted = db.Get(id)
-				json.NewEncoder(w).Encode(igcWanted)
-				//
+				//json.NewEncoder(w).Encode(igcWanted)
 
+				//then encode the igcFile
+				url := igcWanted.Url
+				track, err := igc.ParseLocation(url)
+				if err != nil {
+					fmt.Errorf("Problem reading the track", err)
+				}
+				igcT := igcTrack{}
+				igcT.Glider = track.GliderType
+				igcT.Glider_id = track.GliderID
+				igcT.Pilot = track.Pilot
+				igcT.Track_length = track.Task.Distance()
+				igcT.H_date = track.Date.String()
+				json.NewEncoder(w).Encode(igcT)
 			}
 		}
 	default:
@@ -143,6 +155,5 @@ func main() {
 	port := os.Getenv("PORT")
 	http.HandleFunc("/igcinfo/api", getApi)
 	http.HandleFunc("/igcinfo/api/igc/", igcHandler)
-
 	http.ListenAndServe(":"+port, nil)
 }
