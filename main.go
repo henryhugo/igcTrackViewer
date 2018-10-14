@@ -137,7 +137,7 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 					fmt.Fprintln(w, "Use format id0 or id21 for exemple")
 				}
 			}
-			if parts[5] == "lol" {
+			/*if parts[5] == "lol" {
 				fmt.Fprintln(w, "case field")
 				/*infoWanted := parts[5]
 				id := parts[4]*/
