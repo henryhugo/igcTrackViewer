@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"net/http"
 	"os"
-	"strings"
 )
 
 type API struct {
@@ -77,18 +76,17 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 		{
 			//GET case
 			http.Header.Add(w.Header(), "content-type", "application/json")
-			parts := strings.Split(r.URL.Path, "/")
-			fmt.Fprintln(w, parts)
-			if len(parts) != 4 {
-				return
-			}
-
 			json.NewEncoder(w).Encode(ids)
 		}
 	default:
 		http.Error(w, "not implemented yet", http.StatusNotImplemented)
 
 	}
+}
+
+func idHandler(w http.ResponseWriter, r *http.Request) {
+	http.Header.Add(w.Header(), "content-type", "application/json")
+
 }
 
 var db igcDB
@@ -100,8 +98,9 @@ func main() {
 	idCount = 0
 	ids = nil
 	port := os.Getenv("PORT")
+	http.HandleFunc("/igcinfo/api/igc/", idHandler)
 	http.HandleFunc("/igcinfo/api", getApi)
-	http.HandleFunc("/igcinfo/api/igc", igcHandler)
+	http.HandleFunc("/igcinfo/api/igc/", igcHandler)
 
 	http.ListenAndServe(":"+port, nil)
 }
