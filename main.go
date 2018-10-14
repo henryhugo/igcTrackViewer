@@ -140,9 +140,9 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			/*if parts[5] == "lol" {
 				fmt.Fprintln(w, "case field")
 				/*infoWanted := parts[5]
-				id := parts[4]*/
+				id := parts[4]
 
-			}
+			}*/
 
 		}
 	default:
