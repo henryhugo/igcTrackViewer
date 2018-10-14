@@ -88,11 +88,12 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 			if len(parts) == 5 {
+				fmt.Fprintln(w, "case 5")
 				//deal with the id
-				var igcWanted igcFile
+				/*var igcWanted igcFile
 				id := parts[4]
 				igcWanted = db.Get(id)
-				json.NewEncoder(w).Encode(igcWanted)
+				json.NewEncoder(w).Encode(igcWanted)*/
 
 			}
 			//fmt.Fprintln(w, parts)
