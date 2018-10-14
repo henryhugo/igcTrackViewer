@@ -82,24 +82,24 @@ func igcHandler(w http.ResponseWriter, r *http.Request) {
 			parts := strings.Split(r.URL.Path, "/")
 			fmt.Fprintf(w, "longueur : %d\n", len(parts))
 			fmt.Fprintln(w, parts)
-			if len(parts) > 5 || len(parts) < 3 {
+			if len(parts) != 5 {
 				//deal with errors
 				fmt.Fprintln(w, "wrong numbers of parameters")
 				return
 			}
-			if len(parts) == 5 {
+			if parts[5] == "" {
+				//deal with the array
 				fmt.Fprintln(w, "case 5")
+				json.NewEncoder(w).Encode(ids)
+
+			}
+			if parts[5] != "" {
 				//deal with the id
 				/*var igcWanted igcFile
 				id := parts[4]
 				igcWanted = db.Get(id)
 				json.NewEncoder(w).Encode(igcWanted)*/
 
-			}
-			//fmt.Fprintln(w, parts)
-			if len(parts) == 6 {
-				//deal with the array
-				json.NewEncoder(w).Encode(ids)
 			}
 		}
 	default:
