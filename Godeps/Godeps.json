@@ -2,9 +2,6 @@
 	"ImportPath": "igcTrackViewer",
 	"GoVersion": "go1.11",
 	"GodepVersion": "v80",
-	"Packages": [
-		"github.com/marni/goigc"
-	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/golang/geo/r1",
